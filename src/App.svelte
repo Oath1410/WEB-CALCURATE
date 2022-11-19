@@ -26,6 +26,9 @@
   function add(name) {
     // @ts-ignore
     let amount = document.getElementById(name).value;
+    if (amount == "") {
+      amount = 0;
+    }
     data[name] = data[name] + parseInt(amount);
 
     // ปรับค่าเป็น 0 หลังจากบันทึก
