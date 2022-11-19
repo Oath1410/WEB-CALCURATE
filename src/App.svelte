@@ -26,7 +26,7 @@
   function add(name) {
     // @ts-ignore
     let amount = document.getElementById(name).value;
-    if (amount == "") {
+    if (amount == "" || amount == 0 || amount == null) {
       amount = 0;
     }
     data[name] = data[name] + parseInt(amount);
