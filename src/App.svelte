@@ -1,4 +1,7 @@
 <script>
+  // bypass
+  // let data = { oat: 20, nut: 200, ing: 1000 };
+
   let num;
 
   let show = true;
@@ -8,8 +11,15 @@
   function create() {
     for (let i = 1; i <= num; i++) {
       let name = prompt("ใส่ชื่อคนที่" + i);
+
+      while (name == "") {
+        name = prompt("ใส่ชื่อคนที่" + i);
+      }
+
       data[name] = 0;
       show = false;
+      document.getElementById("section").style.display = "none";
+      document.getElementById("section2").style.display = "block";
     }
   }
 
@@ -26,209 +36,153 @@
 </script>
 
 <main>
-  <!-- bootstrap 5 -->
-
-  <div class="header">
-    <h1>คำนวณเงินไพ่</h1>
-    {#if show}
-      <input bind:value={num} type="number" on:click={() => create()}
-        on:keypress={(e) => {
-          if (e.key == "Enter") {
-            create();
-          }
-        }} placeholder="จำนวนผู้เล่น" />
-      <button
-        class="button-9"
-        >ยืนยัน</button
-      >
-    {/if}
-  </div>
-  <div>
-    {#each Object.keys(data) as name}
-      <div class="list">
-        <h2>{name}</h2>
-
-        <h2 class="money">( {data[name]} )</h2>
-
-        <!-- ปุ่มคิดเงิน-->
-        <input
-          type="number"
-          id={name}
-          value="money"
-          placeholder="ใส่จำนวนเงิน"
-        />
-        <button class="button-3" on:click={() => add(name)}>ยืนยัน</button>
-        <br />
-        <br />
-        <button class="button-3" on:click={() => (data[name] += 5)}>+5</button>
-        <button class="button-3" on:click={() => (data[name] += 10)}>+10</button
-        >
-        <button class="button-3" on:click={() => (data[name] += 20)}>+20</button
-        >
-        <button class="button-3" on:click={() => (data[name] += 50)}>+50</button
-        >
-        <button class="button-3" on:click={() => (data[name] += 100)}
-          > +100</button
-        >
-        <br />
-        <br />
-        <button class="button-3" on:click={() => (data[name] -= 5)}>-5</button>
-        <button class="button-3" on:click={() => (data[name] -= 10)}>-10</button
-        >
-        <button class="button-3" on:click={() => (data[name] -= 20)}>-20</button
-        >
-        <button class="button-3" on:click={() => (data[name] -= 50)}>-50</button
-        >
-        <button class="button-3" on:click={() => (data[name] -= 100)}
-          >-100</button
-        >
-        <br />
-        <br />
+  <section id="section" class="vh-100" style="background-color: #508bfc;">
+    <div class="container py-5 h-100 ">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+              <h1 class="text-primary mb-4">คำนวณเงินไพ่</h1>
+              {#if show}
+                <div class="form-outline mb-4">
+                  <input
+                    class="form-control form-control-lg"
+                    bind:value={num}
+                    type="number"
+                    on:click={() => create()}
+                    on:keypress={(e) => {
+                      if (e.key == "Enter") {
+                        create();
+                      }
+                    }}
+                    placeholder="จำนวนผู้เล่น"
+                  />
+                </div>
+                <button type="button" class="btn btn-primary btn-lg btn-block"
+                  >ยืนยัน</button
+                >
+              {/if}
+            </div>
+          </div>
+        </div>
       </div>
-    {/each}
-  </div>
+    </div>
+  </section>
+
+  <section
+    id="section2"
+    class="vh-100"
+    style="background-color: #508bfc; display:none;"
+  >
+    <div class="container py-5 h-100 ">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+              {#each Object.keys(data) as name}
+                <div class="d-flex justify-content-center align-items-center">
+                  {#if name == "null"}
+                    <h2 id="name" class="">มึงไม่กรอกชื่อละไอ้สัส ไปรีเว็ป</h2>
+                  {:else}
+                    <h2 id="name" class="">{name}</h2>
+                  {/if}
+                  <h2>(</h2>
+                  <h2 id="money" class="text-danger">{data[name]}</h2>
+                  <h2>)</h2>
+                </div>
+                <!-- ปุ่มคิดเงิน-->
+                <div class="input-group mb-3">
+                  <input
+                    class="form-control form-control-lg"
+                    type="number"
+                    id={name}
+                    value="money"
+                    placeholder="ใส่จำนวนเงิน"
+                  />
+                  <button
+                    class="btn btn-primary btn-lg btn-block"
+                    on:click={() => add(name)}>คิดเงิน</button
+                  >
+                </div>
+
+                <div
+                  class="btn-group pb-2"
+                  role="group"
+                  aria-label="Basic example"
+                >
+                  <button
+                    class="btn btn-success"
+                    on:click={() => (data[name] += 5)}>+5</button
+                  >
+                  <button
+                    class="btn btn-success"
+                    on:click={() => (data[name] += 10)}>+10</button
+                  >
+                  <button
+                    class="btn btn-success"
+                    on:click={() => (data[name] += 20)}>+20</button
+                  >
+                  <button
+                    class="btn btn-success"
+                    on:click={() => (data[name] += 50)}>+50</button
+                  >
+                  <button
+                    class="btn btn-success"
+                    on:click={() => (data[name] += 100)}
+                  >
+                    +100</button
+                  >
+                </div>
+
+                <div
+                  class="btn-group pb-2"
+                  role="group"
+                  aria-label="Basic example"
+                >
+                  <button
+                    class="btn btn-danger"
+                    on:click={() => (data[name] -= 5)}>-5</button
+                  >
+                  <button
+                    class="btn btn-danger"
+                    on:click={() => (data[name] -= 10)}>-10</button
+                  >
+                  <button
+                    class="btn btn-danger"
+                    on:click={() => (data[name] -= 20)}>-20</button
+                  >
+                  <button
+                    class="btn btn-danger"
+                    on:click={() => (data[name] -= 50)}>-50</button
+                  >
+                  <button
+                    class="btn btn-danger"
+                    on:click={() => (data[name] -= 100)}>-100</button
+                  >
+                </div>
+                <hr class="my-4" />
+              {/each}
+              <p class="text-danger fs-1">ใช้เว็บนี้แล้วรวย</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <style>
-  .list {
-    align-items: center;
+  @import url("https://fonts.googleapis.com/css2?family=Kanit&display=swap");
+  * {
+    font-family: "Kanit", sans-serif;
+  }
+
+  #name {
+    color: darkblue;
   }
 
   h2 {
-    color: rgb(0, 0, 0);
-    font-size: 30px;
-    font-weight: 600;
-    text-align: center;
-    margin: 0;
-  }
-
-  .money {
-    color: #ff0000;
-    font-size: 35px;
-  }
-
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-
-  input {
-    width: 50%;
-    padding: 10px 15px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 2px solid red;
-    border-radius: 4px;
-    background-color: #ffffff;
-    
-    font-size: 20px;
-    
-  }
-  .header {
-    padding: 60px;
-    text-align: center;
-    background: #1abc9c;
-    color: white;
-    font-size: 20px;
-  }
-
-  input[type="number"] {
-    color: rgb(0, 0, 0);
-  }
-
-  .button-9 {
-    appearance: button;
-    backface-visibility: hidden;
-    background-color: #405cf5;
-    border-radius: 6px;
-    border-width: 0;
-    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-      rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue",
-      Ubuntu, sans-serif;
-    font-size: 100%;
-    height: 44px;
-    line-height: 1.15;
-    margin: 12px 0 0;
-    outline: none;
-    overflow: hidden;
-    padding: 0 25px;
-    position: relative;
-    text-align: center;
-    text-transform: none;
-    transform: translateZ(0);
-    transition: all 0.2s, box-shadow 0.08s ease-in;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: 100%;
-  }
-
-  .button-9:disabled {
-    cursor: default;
-  }
-
-  .button-9:focus {
-    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-      rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
-      rgba(50, 151, 211, 0.3) 0 0 0 4px;
-  }
-
-  .button-3 {
-    appearance: none;
-    background-color: #2ea44f;
-    border: 1px solid rgba(27, 31, 35, 0.15);
-    border-radius: 6px;
-    box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-      sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
-    padding: 6px 16px;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
-
-  .button-3:focus:not(:focus-visible):not(.focus-visible) {
-    box-shadow: none;
-    outline: none;
-  }
-
-  .button-3:hover {
-    background-color: #2c974b;
-  }
-
-  .button-3:focus {
-    box-shadow: rgba(46, 164, 79, 0.4) 0 0 0 3px;
-    outline: none;
-  }
-
-  .button-3:disabled {
-    background-color: #94d3a2;
-    border-color: rgba(27, 31, 35, 0.1);
-    color: rgba(255, 255, 255, 0.8);
-    cursor: default;
-  }
-
-  .button-3:active {
-    background-color: #298e46;
-    box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
+    padding: 0 3px;
+    font-size: 40px;
   }
 </style>
