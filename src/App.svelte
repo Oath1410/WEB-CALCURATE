@@ -31,15 +31,15 @@
   <div class="header">
     <h1>คำนวณเงินไพ่</h1>
     {#if show}
-      <input bind:value={num} type="number" placeholder="จำนวนผู้เล่น" />
-      <button
-        class="button-9"
-        on:click={() => create()}
+      <input bind:value={num} type="number" on:click={() => create()}
         on:keypress={(e) => {
           if (e.key == "Enter") {
             create();
           }
-        }}>ยืนยัน</button
+        }} placeholder="จำนวนผู้เล่น" />
+      <button
+        class="button-9"
+        >ยืนยัน</button
       >
     {/if}
   </div>
