@@ -68,7 +68,7 @@
         <button class="button-3" on:click={() => (data[name] += 50)}>+50</button
         >
         <button class="button-3" on:click={() => (data[name] += 100)}
-          >+100</button
+          > +100</button
         >
         <br />
         <br />
