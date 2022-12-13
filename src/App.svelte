@@ -43,6 +43,11 @@
     }
     data[name] = data[name] + parseInt(amount);
     if (amount != 0) {
+      // check log > 5 and remove
+      if (log[name].length > 5) {
+        log[name].shift();
+      }
+
       log[name].push(amount);
     }
     // ปรับค่าเป็น 0 หลังจากบันทึก
